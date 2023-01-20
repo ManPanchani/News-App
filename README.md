@@ -1,16 +1,8 @@
 # viva_project
 
 
-
-
-
-https://user-images.githubusercontent.com/118456066/213663199-8017a4b1-61bb-4bf4-a6f0-78bcc0e0b8be.mp4
-
-
-
-
-
-<img src="" width="200px">
+<img src="https://user-images.githubusercontent.com/118456066/213663199-8017a4b1-61bb-4bf4-a6f0-78bcc0e0b8be.mp4
+" width="200px">
 
 
 
