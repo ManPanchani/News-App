@@ -8,5 +8,3 @@
 
 
 
-
-<img src="" width="200px">
