@@ -1,4 +1,4 @@
-class News {
+class NewsModel {
   final List news;
   final List sportsNews;
   final List businessNews;
@@ -7,7 +7,7 @@ class News {
   final List scienceNews;
   final List technologyNews;
 
-  News({
+  NewsModel({
     required this.news,
     required this.sportsNews,
     required this.businessNews,
@@ -17,8 +17,8 @@ class News {
     required this.technologyNews,
   });
 
-  factory News.fromJson({required Map data}) {
-    return News(
+  factory NewsModel.fromJson({required Map data}) {
+    return NewsModel(
       news: data['articles'],
       sportsNews: data['articles'],
       businessNews: data['articles'],

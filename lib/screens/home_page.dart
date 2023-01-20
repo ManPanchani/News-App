@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../api_helpers/api_helpers.dart';
 import '../api_models/api_models.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -10,6 +12,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  requestPermission() async {
+    await Permission.location.request();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+  }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -118,7 +130,7 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap: () {
                 setState(() {
-                  Navigator.of(context).pushNamed("healthPage");
+                  Navigator.of(context).pushNamed("HealthPage");
                 });
               },
             ),
@@ -176,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                       child: Text("${snapshot.error}"),
                     );
                   } else if (snapshot.hasData) {
-                    News? data = snapshot.data;
+                    NewsModel? data = snapshot.data;
 
                     return ListView.builder(
                       itemCount: data!.news.length,
@@ -185,6 +197,14 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             InkWell(
+                              onTap: () {
+                                setState(() {
+                                  Navigator.of(context).pushNamed(
+                                    "DetailPage",
+                                    arguments: data.news[i]['url'],
+                                  );
+                                });
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
@@ -197,13 +217,6 @@ class _HomePageState extends State<HomePage> {
                                 height: h * 0.4,
                                 width: w,
                               ),
-                              onTap: () {
-                                setState(() {
-                                  Navigator.of(context).pushNamed(
-                                    "${data.news[i]['url']}",
-                                  );
-                                });
-                              },
                             ),
                             SizedBox(
                               height: h * 0.02,
@@ -240,7 +253,6 @@ class _HomePageState extends State<HomePage> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
-                              textAlign: TextAlign.start,
                             ),
                             SizedBox(
                               height: h * 0.04,

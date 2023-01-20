@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../api_helpers/api_helpers.dart';
 import '../api_models/api_models.dart';
 
-class healthPage extends StatefulWidget {
-  const healthPage({Key? key}) : super(key: key);
+class HealthPage extends StatefulWidget {
+  const HealthPage({Key? key}) : super(key: key);
 
   @override
-  State<healthPage> createState() => _healthPageState();
+  State<HealthPage> createState() => _HealthPageState();
 }
 
-class _healthPageState extends State<healthPage> {
+class _HealthPageState extends State<HealthPage> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -40,7 +40,7 @@ class _healthPageState extends State<healthPage> {
                       child: Text("${snapshot.error}"),
                     );
                   } else if (snapshot.hasData) {
-                    News? data = snapshot.data;
+                    NewsModel? data = snapshot.data;
 
                     return ListView.builder(
                       itemCount: data!.healthNews.length,
@@ -48,17 +48,27 @@ class _healthPageState extends State<healthPage> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    "${data.news[i]['urlToImage']}",
+                            InkWell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      "${data.news[i]['urlToImage']}",
+                                    ),
+                                    fit: BoxFit.fill,
                                   ),
-                                  fit: BoxFit.fill,
                                 ),
+                                height: h * 0.4,
+                                width: w,
                               ),
-                              height: h * 0.4,
-                              width: w,
+                              onTap: () {
+                                setState(() {
+                                  Navigator.of(context).pushNamed(
+                                    "DetailPage",
+                                    arguments: data.healthNews[i]['url'],
+                                  );
+                                });
+                              },
                             ),
                             SizedBox(
                               height: h * 0.02,
@@ -95,7 +105,6 @@ class _healthPageState extends State<healthPage> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
-                              textAlign: TextAlign.start,
                             ),
                             SizedBox(
                               height: h * 0.04,

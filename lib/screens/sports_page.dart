@@ -40,7 +40,7 @@ class _SportsPageState extends State<SportsPage> {
                       child: Text("${snapshot.error}"),
                     );
                   } else if (snapshot.hasData) {
-                    News? data = snapshot.data;
+                    NewsModel? data = snapshot.data;
 
                     return ListView.builder(
                       itemCount: data!.sportsNews.length,
@@ -48,17 +48,27 @@ class _SportsPageState extends State<SportsPage> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    "${data.news[i]['urlToImage']}",
+                            InkWell(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      "${data.news[i]['urlToImage']}",
+                                    ),
+                                    fit: BoxFit.fill,
                                   ),
-                                  fit: BoxFit.fill,
                                 ),
+                                height: h * 0.4,
+                                width: w,
                               ),
-                              height: h * 0.4,
-                              width: w,
+                              onTap: () {
+                                setState(() {
+                                  Navigator.of(context).pushNamed(
+                                    "DetailPage",
+                                    arguments: data.sportsNews[i]['url'],
+                                  );
+                                });
+                              },
                             ),
                             SizedBox(
                               height: h * 0.02,
@@ -95,7 +105,6 @@ class _SportsPageState extends State<SportsPage> {
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
-                              textAlign: TextAlign.start,
                             ),
                             SizedBox(
                               height: h * 0.04,
